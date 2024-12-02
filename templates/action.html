@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ intent.capitalize() }} - SmartRecycle</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #34495e;
+        }
+
+        .form-container {
+            margin: 20px 0;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-container input, .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #219150;
+        }
+
+        .location-list {
+            margin-top: 20px;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .location-list li {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #219150;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Action for {{ category }}</h1>
+
+        {% if intent == "reuse" or intent == "recycle" %}
+            <h2>🎥 Video Tutorials for {{ intent.capitalize() }}</h2>
+            <div class="video-list">
+                {% for video in videos %}
+                    <div class="video-item">
+                        <img src="{{ video['thumbnail'] }}" alt="Video Thumbnail">
+                        <a href="{{ video['link'] }}" target="_blank">{{ video['title'] }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif intent == "disposal" %}
+            <h2>📍 Disposal Locations</h2>
+            <div class="form-container">
+                <form method="POST">
+                    <label for="zip_code">Enter your ZIP code:</label>
+                    <input type="text" id="zip_code" name="zip_code" required>
+                    
+                    <label for="radius">Search radius (in miles):</label>
+                    <input type="number" id="radius" name="radius" min="1" max="50" value="10">
+                    
+                    <button type="submit">Find Disposal Locations</button>
+                </form>
+            </div>
+
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+
+            {% if locations %}
+                <h3>Nearby Locations:</h3>
+                <ul class="location-list">
+                    {% for loc in locations %}
+                        <li>
+                            <strong>{{ loc['name'] }}</strong> - {{ loc['address'] }} ({{ "%.2f"|format(loc['distance']) }} miles away)
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {% if request.method == 'POST' and not error %}
+                    <p>No locations found. Please try again with a different ZIP code or radius.</p>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="back-link">🔙 Back to Home</a>
+    </div>
+</body>
+</html>

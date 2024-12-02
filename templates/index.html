@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>SmartRecycle</title>
+</head>
+<body>
+    <div class="header">
+        <h1>🌍 SmartRecycle</h1>
+    </div>
+
+    <div class="instructions-container">
+        <h2>🛠️ How to Use This Application</h2>
+        <ol>
+            <li>Upload an image of waste by clicking on the <strong>"Choose an Image File"</strong> button.</li>
+            <li>Wait for the system to process and classify the type of waste.</li>
+            <li>Once the waste category is displayed, choose one of the following actions:
+                <ul>
+                    <li><strong>♻️ Reuse:</strong> Get video recommendations for reusing the waste.</li>
+                    <li><strong>♻️ Recycle:</strong> Find video tutorials for recycling the waste.</li>
+                    <li><strong>🗑️ Disposal:</strong> Enter your ZIP code to find nearby disposal locations.</li>
+                </ul>
+            </li>
+            <li>Follow the recommendations to manage your waste responsibly.</li>
+        </ol>
+        <p><strong>Note:</strong> Ensure that the image clearly shows the waste item for better classification results.</p>
+    </div>
+
+    <div class="upload-container">
+        <div class="drop-area">
+            <div class="icon-container">
+                <img src="/static/icons/image.png" alt="Upload Icon" class="upload-icon">
+            </div>
+            <div class="instructions">
+                Drag and drop file here<br>
+                <span class="file-size-limit">Limit 200MB per file • JPG, JPEG, PNG</span>
+            </div>
+            <button type="button" class="browse-button" onclick="document.getElementById('file-upload').click()">Browse files</button>
+        </div>
+        <input id="file-upload" type="file" name="image" accept="image/jpeg, image/png" onchange="showFileNameAndPreview(event)" hidden>
+        <div id="file-info" class="file-info"></div>
+    </div>
+    
+    <div id="image-preview" class="image-preview">
+        <h3>Uploaded Image Preview:</h3>
+        <img id="preview-img" />
+    </div>
+    
+    <div id="submit-container">
+        <button type="button" class="submit-button" onclick="submitForClassification()">Submit for Classification</button>
+    </div>    
+    
+    <div class="result-container">
+        <h2>
+            Predicted Waste Category: 
+            <span class="predicted-category">
+                {{ predicted_category if predicted_category else 'None' }}
+            </span>
+        </h2>
+        <div class="actions">
+            <button class="reuse-button" onclick="window.location.href='/action?action=reuse'">♻️ Reuse</button>
+            <button class="recycle-button" onclick="window.location.href='/action?action=recycle'">♻️ Recycle</button>
+            <button class="disposal-button" onclick="window.location.href='/action?action=disposal'">🗑️ Disposal</button>
+        </div>        
+    </div>
+    
+    
+    
+    
+    
+
+
+
+
+
+    <script>
+        function showFileNameAndPreview(event) {
+    const fileInput = event.target;
+    const fileInfo = document.getElementById('file-info');
+    const imagePreview = document.getElementById('image-preview');
+    const previewImg = document.getElementById('preview-img');
+    const submitContainer = document.getElementById('submit-container');
+
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileSize = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+
+        // Show file info
+        fileInfo.innerHTML = `<span><b>${fileName}</b> (${fileSize})</span>`;
+
+        // Show image preview
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImg.src = e.target.result; // Set image source
+            imagePreview.style.display = 'block'; // Make the preview visible
+            submitContainer.style.display = 'block'; // Show the submit button
+        };
+        reader.readAsDataURL(file); // Read file as data URL
+    } else {
+        // Clear file info and hide preview if no file selected
+        fileInfo.innerHTML = '';
+        imagePreview.style.display = 'none';
+        submitContainer.style.display = 'none';
+    }
+}
+
+        function submitForClassification() {
+    const fileInput = document.getElementById('file-upload');
+    const formData = new FormData();
+
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        formData.append('image', file);
+
+        fetch('/', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                return response.text(); // Parse the HTML response
+            })
+            .then((html) => {
+                // Create a temporary DOM element to parse the returned HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                // Update the relevant sections
+                const newResultContainer = tempDiv.querySelector('.result-container');
+                const resultContainer = document.querySelector('.result-container');
+                resultContainer.innerHTML = newResultContainer.innerHTML;
+
+                // Keep the uploaded image and button visible
+                document.getElementById('image-preview').style.display = 'block';
+                document.getElementById('submit-container').style.display = 'block';
+            })
+            .catch((error) => {
+                alert('Error during prediction. Please try again.');
+                console.error('Error:', error);
+            });
+    } else {
+        alert('No file selected. Please select a file first.');
+    }
+}
+
+
+
+
+    </script>
+    
+    
+    
+    
+</body>
+</html>

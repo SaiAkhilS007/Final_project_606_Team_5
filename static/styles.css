@@ -1,0 +1,238 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1A1A2E; /* Dark background */
+    color: #FFFFFF; /* White text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+.header {
+    background-color: #0F3460; /* Darker navy background */
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #FFFFFF;
+}
+
+/* Instructions Section */
+.instructions-container {
+    background-color: #162447; /* Dark blue background */
+    padding: 30px;
+    border-radius: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+.instructions-container h2 {
+    font-size: 1.8rem;
+    color: #4CAF50; /* Green heading */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.instructions-container ol {
+    padding-left: 20px;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.instructions-container ul {
+    padding-left: 40px;
+    list-style-type: disc;
+}
+
+.instructions-container li {
+    margin-top: 10px;
+}
+
+.instructions-container p {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #BDBDBD; /* Light gray text */
+}
+
+/* Upload Container */
+.upload-container {
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Drop Area */
+.drop-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #D3D3D3;
+    border-radius: 8px;
+    padding: 40px;
+    background-color: #F8F9FA;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.drop-area:hover {
+    background-color: #EFEFEF;
+}
+
+/* Upload Icon */
+.upload-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+/* Instructions for Upload */
+.instructions {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.file-size-limit {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Browse Button */
+.browse-button {
+    border: 1px solid #D9534F;
+    background-color: transparent;
+    color: #D9534F;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.browse-button:hover {
+    background-color: #D9534F;
+    color: #FFF;
+}
+
+/* File Info Section */
+.file-info {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Image Preview Section */
+.image-preview {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #F8F9FA;
+    border: 1px solid #D3D3D3;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.image-preview h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Submit Button */
+.submit-button {
+    border: 1px solid #4CAF50; /* Green border */
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 auto; /* Center the button in block-level elements */
+    text-align: center; /* Ensure text inside button is centered */
+}
+
+
+.submit-button:hover {
+    background-color: #45a049; /* Darker green */
+    border-color: #45a049;
+}
+
+/* Submit Container */
+#submit-container {
+    display: flex; /* Enable flexbox for alignment */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically (if needed) */
+    margin-top: 20px; /* Add spacing above the container */
+    width: 100%; /* Ensure it spans the full width of the parent */
+    text-align: center; /* Optional: Align text content */
+}
+
+
+.actions {
+    display: flex; /* Enable flexbox */
+    justify-content: space-between; /* Distribute buttons with space between them */
+    align-items: center; /* Align buttons vertically in the center */
+    margin-top: 20px; /* Add spacing above the buttons */
+}
+
+.actions button {
+    flex: 1; /* Make all buttons the same width */
+    margin: 0 10px; /* Add space between buttons */
+    padding: 10px 20px; /* Add padding for better button size */
+    font-size: 16px; /* Ensure consistent font size */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover transition */
+    text-align: center; /* Center text inside buttons */
+}
+
+/* Individual button styles */
+.reuse-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.reuse-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    border-color: #45a049;
+}
+
+.recycle-button {
+    background-color: #2196F3; /* Blue */
+    color: white;
+    border: 1px solid #2196F3;
+}
+
+.recycle-button:hover {
+    background-color: #1976D2; /* Darker blue on hover */
+    border-color: #1976D2;
+}
+
+.disposal-button {
+    background-color: #F44336; /* Red */
+    color: white;
+    border: 1px solid #F44336;
+}
+
+.disposal-button:hover {
+    background-color: #D32F2F; /* Darker red on hover */
+    border-color: #D32F2F;
+}
+

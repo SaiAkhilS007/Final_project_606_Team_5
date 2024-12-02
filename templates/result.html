@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Prediction Result</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Predicted Category: {{ category }}</h1>
+        <a href="{{ url_for('youtube', category=category, intent='reuse') }}">♻️ Reuse Tutorials</a>
+        <a href="{{ url_for('locations', category=category, intent='disposal') }}">🗑️ Find Disposal Locations</a>
+    </div>
+</body>
+</html>

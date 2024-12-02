@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{{ intent.capitalize() }} Tutorials - SmartRecycle</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-bar button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #219150;
+        }
+
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .video-item {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item img {
+            width: 120px;
+            height: 90px;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+        .video-item a {
+            font-size: 16px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .video-item a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #219150;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">🌍 SmartRecycle</a>
+        </div>
+        <div class="links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('youtube_videos', intent='reuse') }}">Reuse Tutorials</a>
+            <a href="{{ url_for('youtube_videos', intent='recycle') }}">Recycle Tutorials</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>{{ intent.capitalize() }} Tutorials for {{ category }}</h1>
+
+        <div class="video-list">
+            {% for video in videos %}
+                <div class="video-item">
+                    <img src="{{ video['thumbnail'] }}" alt="Video Thumbnail">
+                    <a href="{{ video['link'] }}" target="_blank">{{ video['title'] }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <a href="{{ url_for('home') }}" class="back-link">🔙 Back to Home</a>
+    </div>
+</body>
+</html>
