@@ -1,0 +1,2 @@
+model/Resnet_Neural_Network_model.h5 filter=lfs diff=lfs merge=lfs -text
+static/icons/image.png filter=lfs diff=lfs merge=lfs -text
