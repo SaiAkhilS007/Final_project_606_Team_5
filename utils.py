@@ -4,9 +4,29 @@ from tensorflow.keras.models import load_model
 import requests
 import googlemaps
 from geopy.distance import geodesic
+import os
+import requests
+from tensorflow.keras.models import load_model
 
-# Load Model and ResNet50 Feature Extractor
+MODEL_URL = "https://waste2024.s3.us-east-2.amazonaws.com/Resnet_Neural_Network_model.h5"
 MODEL_PATH = "model/Resnet_Neural_Network_model.h5"
+
+def download_model():
+    """Downloads the model file from S3 if not already downloaded."""
+    if not os.path.exists(MODEL_PATH):
+        os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+        print("Downloading model...")
+        response = requests.get(MODEL_URL, stream=True)
+        if response.status_code == 200:
+            with open(MODEL_PATH, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            print("Model downloaded successfully.")
+        else:
+            raise Exception(f"Failed to download model: {response.status_code}")
+
+# Download and load the model
+download_model()
 model = load_model(MODEL_PATH)
 feature_extractor = ResNet50(weights="imagenet", include_top=False, pooling="avg")
 
