@@ -1,5 +1,5 @@
 import numpy as np
-from tensorflow.keras.applications import preprocess_input, ResNet50
+from tensorflow.keras.applications.resnet50 import preprocess_input, ResNet50
 from tensorflow.keras.models import load_model
 import requests
 import googlemaps
