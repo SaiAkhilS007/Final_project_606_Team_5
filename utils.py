@@ -27,7 +27,7 @@ def download_model():
 
 # Download and load the model
 download_model()
-model = load_model(MODEL_PATH)
+model = load_model(MODEL_PATH, compile=False)
 feature_extractor = ResNet50(weights="imagenet", include_top=False, pooling="avg")
 
 # Initialize Google Maps API
